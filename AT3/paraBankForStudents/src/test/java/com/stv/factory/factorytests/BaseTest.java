@@ -8,15 +8,11 @@ import org.testng.annotations.BeforeMethod;
 public abstract class BaseTest {
     protected WebDriver driver;
     protected LoginPage loginPage;
-
-
-
     @BeforeMethod
     public void setUp() {
         driver = TestFactory.getDriver();
         loginPage = TestFactory.createLoginPage(driver);
     }
-
     @AfterMethod
     public void tearDown() {
         if (driver != null) {

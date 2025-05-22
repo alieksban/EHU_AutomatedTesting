@@ -1,0 +1,139 @@
+Task 1.1 Checklist:
+
+1. Password Field Masking
+Objective: Ensure that the password is masked when typing.
+
+Steps:
+Navigate to Site
+Click on the Password input field.
+Type any characters.
+Observe the input.
+
+Expected Result: Characters should appear as dots or asterisks (not visible as plain text).
+
+2. Invalid Email Format Validation
+Objective: Check the validation for incorrectly formatted email addresses.
+
+Steps:
+Navigate to Site.
+Enter invalid emails one by one into the Email field, following by clicking Sign In Securely:
+user@
+user@com
+@domain.com
+user.com
+user
+
+Expected Result: An appropriate error message should be displayed for each invalid email format, and the form should not be submitted.
+
+3. Clear Error Message on Retry
+Objective: Make sure error messages are reset after a second login attempt.
+
+Steps:
+Navigate to Site.
+Try to login with invalid credentials (e.g., wrong email/password).
+Observe the error message.
+Clear the fields.
+Enter valid login credentials.
+Click Login.
+
+Expected Result: The old error message should be removed or replaced with the result of the new login attempt.
+
+4. Case Sensitivity in Password Field
+Objective: Check if password field treats uppercase/lowercase as different characters.
+
+Steps:
+Navigate to Site.
+Enter a valid email.
+Enter an incorrect version of a known valid password, using different casing (e.g., if the correct is Test123 - try test123).
+Click Login.
+
+Expected Result: Login should fail. Password field should be case-sensitive.
+
+5. Tab Key Navigation
+Objective: Ensure proper keyboard navigation using Tab key.
+
+Steps:
+Navigate to Site login page.
+Press the Tab key repeatedly starting from the top of the form.
+Observe the focus shift between fields and buttons.
+
+Expected Result: Focus should go from Email -> Password -> Sign In Securely button in a logical and accessible order.
+
+6. Login Button Disabled Without Input
+Objective: Ensure that the login button remains disabled or unclickable when required fields are empty.
+
+Steps:
+Navigate to Site login page.
+Do not enter anything into the Email or Password fields.
+Try clicking the Login button.
+
+Expected Result: The Login button should either be disabled (grayed out) or should trigger a validation message when clicked with incomplete input. Form submission should not proceed.
+
+Task 1.2 Locators:
+
+Email field - id="Login_EmailAddress"
+Password field - id="Login_Password"
+Sign in Securely Button - id="LoginButton"
+Login Error Message Area - id="Login_EmailAddress-error"
+Password Error Message Area - id="Login_Password-error"
+
+Task 1.3 Gherkin scenarios:
+
+Feature: Login Page Additional Test Cases
+
+  Scenario: Password Field Masking
+    Given I am on the site's login page
+    When I click on the password input field
+    And I type Test123 into the password field
+    Then the characters should appear as masked
+
+  Scenario: Invalid Email Format Validation
+    Given I am on the site's login page
+    When I enter <invalid email> into the email field
+    And I click the Sign In Securely button
+    Then I should see an email format error message
+    And the form should not be submitted
+
+    Examples:
+      | invalid email  |
+      | user@         |
+      | user@com      |
+      | @domain.com   |
+      | user.com      |
+      | user          |
+
+  Scenario: Clear Error Message on Retry
+    Given I am on the site's login page
+    When I enter invalid credentials and submit
+    And I see an error message displayed
+    Then I clear both email and password fields
+    When I enter valid credentials and submit
+    Then the previous error message should be gone
+    And I should either be logged in or see new validation messages
+
+  Scenario: Case Sensitivity in Password Field
+    Given I am on the site's login page
+    And I have a valid account with password Test123
+    When I enter my valid email address
+    And I enter test123 as password
+    And I click the Sign In Securely button
+    Then login should fail
+    And I should see a password error message
+
+  Scenario: Tab Key Navigation
+    Given I am on the site's login page
+    When I press the Tab key
+    Then focus should move to the email field
+    When I press Tab again
+    Then focus should move to the password field
+    When I press Tab again
+    Then focus should move to the Sign In Securely button
+    And pressing Enter should submit the form
+
+  Scenario: Login Button Disabled Without Input
+    Given I am on the site's login page
+    When I leave both email and password fields empty
+    Then the Sign In Securely button should be disabled
+    Or when I click it with empty fields
+    Then validation messages should appear
+    And form submission should not proceed

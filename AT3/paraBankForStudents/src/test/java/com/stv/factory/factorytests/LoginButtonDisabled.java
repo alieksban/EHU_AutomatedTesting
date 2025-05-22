@@ -9,7 +9,6 @@ public class LoginButtonDisabled extends BaseTest {
         loginPage.clickOnAllowCookiesIfVisible();
         loginPage.attemptLogin();
         String message = loginPage.getErrorMessage();
-
         Assert.assertEquals(message, "Please provide a password");
     }
 }
