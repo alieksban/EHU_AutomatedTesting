@@ -11,7 +11,7 @@ Feature: Login functionality
     Then I should see <result>
 
       Examples:
-        | login           | password | result          |
-        | ""              | "pass"   | "no email"      |
-        | "wrong@mail.ru" | ""       | "no password"   |
-        | "wrong"         | "passw"  | "invalid email" |
+        | login           | password   | result          |
+        | ""              | "pass"     | "no email"      |
+        | "wrong@mail.ru" | ""         | "no password"   |
+        | "wrong"         | "password" | "invalid email" |

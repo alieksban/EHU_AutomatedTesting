@@ -90,5 +90,6 @@ public class PasswordMaskingSteps {
                 assertTrue("Error message should be displayed", logError.isDisplayed());
                 break;
         }
+        driver.quit();
     }
 }
