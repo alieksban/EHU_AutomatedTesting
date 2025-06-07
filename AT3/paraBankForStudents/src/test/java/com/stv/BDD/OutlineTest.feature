@@ -1,4 +1,6 @@
+
 Feature: Login functionality
+  Background:
 
   Scenario Outline: Verify login with different inputs
     Given I am on the site's login page

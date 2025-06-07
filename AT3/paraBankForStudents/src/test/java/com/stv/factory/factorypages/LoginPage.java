@@ -4,6 +4,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginPage extends BasePage {
 
@@ -21,6 +23,16 @@ public class LoginPage extends BasePage {
 
     @FindBy(id = "Login_Password-error")
     private WebElement errorMessage;
+
+    @FindBy(xpath = "//*[@id=\"login\"]/span[1]")
+    private WebElement emailError;
+
+    @FindBy(xpath = "//*[@id=\"Login_Password-error\"]")
+    private WebElement passError;
+
+    @FindBy(xpath = "//*[@id=\"Login_EmailAddress-error\"]")
+    private WebElement logError;
+
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -56,5 +68,44 @@ public class LoginPage extends BasePage {
 
         if (allowCookiesButton.isDisplayed())
             allowCookiesButton.click();
+    }
+    public void writeEmail(String login)
+    {
+        emailField.sendKeys(login);
+    }
+    public void writePassword(String password)
+    {
+        passwordField.sendKeys(password);
+    }
+    public String getPasswordType()
+    {
+        return passwordField.getAttribute("type");
+    }
+    public boolean invalidEmailShown()
+    {
+        return emailError.isDisplayed();
+    }
+    public boolean noPasswordShown()
+    {
+        return passError.isDisplayed();
+    }
+    public boolean noEmailShown()
+    {
+        return logError.isDisplayed();
+    }
+    public void clickSignIn(WebDriverWait wait){
+        WebElement signInButton = wait.until(ExpectedConditions.elementToBeClickable(
+                By.id("LoginButton")));
+        signInButton.click();
+    }
+    public void clickLoginField(WebDriverWait wait){
+        WebElement passwordField = wait.until(ExpectedConditions.elementToBeClickable(
+                By.id("Login_EmailAddress")));
+        passwordField.click();
+    }
+    public void clickPasswordField(WebDriverWait wait){
+        WebElement passwordField = wait.until(ExpectedConditions.elementToBeClickable(
+                loginButton));
+        passwordField.click();
     }
 }
